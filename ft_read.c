@@ -12,6 +12,22 @@
 
 #include "fillit.h"
 
+int		ft_check_dyez(char *str, int i)
+{
+	int		contact;
+
+	contact = 0;
+	if (str[i - 1] && str[i - 1] == '#')
+		contact++;
+	if (str[i + 1] && str[i + 1] == '#')
+		contact++;
+	if (str[i - 5] && str[i - 5] == '#')
+		contact++;
+	if (str[i + 5] && str[i + 5] == '#')
+		contact++;
+	return (contact);
+}
+
 int		ft_check_chars(char *str)
 {
 	int		line;
@@ -19,7 +35,9 @@ int		ft_check_chars(char *str)
 	int		i;
 	int		pwin;
 	int		dyez;
+	int		count;
 
+	count = 0;
 	pwin = 0;
 	dyez = 0;
 	line = 1;
@@ -50,7 +68,12 @@ int		ft_check_chars(char *str)
 			if (str[i] == '.')
 				pwin++;
 			if (str[i] == '#')
+			{
+				if ((ft_check_dyez(str, i)) < 1)
+					return (1);
+				count = count + ft_check_dyez(str, i);
 				dyez++;
+			}
 		select++;
 		i++;
 		}
@@ -78,6 +101,13 @@ int		ft_check_chars(char *str)
 	if (pwin != 12 || dyez != 4)
 	{
 		ft_putstr("nombres incorrects\n");
+		return (1);
+	}
+	if (count < 6)
+	{
+		ft_putstr("diezs mal positionnes car total contacts = ");
+		ft_putnbr(count);
+		ft_putchar('\n');
 		return (1);
 	}
 	return (0);

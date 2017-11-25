@@ -23,7 +23,10 @@ int		main(int argc, char **argv)
 	int		ret;
 
 	if (argc != 2)
-		return (ft_error());
+	{
+		ft_putstr("usage: fillit input_file\n");
+		return (0);
+	}
 	ret = ft_read(argv[1]);
 	ft_putnbr(ret);
 	return (0);

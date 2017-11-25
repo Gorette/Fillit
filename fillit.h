@@ -25,5 +25,7 @@ typedef struct		s_tetri
 }					t_tetri;
 
 int		ft_read(char *str);
+int		ft_check_chars(char *str);
+int		ft_check_dyez(char *str, int i);
 
 #endif
