@@ -28,7 +28,7 @@ int		ft_check_dyez(char *str, int i)
 	return (contact);
 }
 
-int		ft_check_chars(char *str)
+int		ft_check_chars(char *str, int ret)
 {
 	int		line;
 	int		select;
@@ -49,7 +49,7 @@ int		ft_check_chars(char *str)
 		{
 			if (line == 5)
 			{
-				if (str[i] != '\0' && str[i] != '\n')
+				if (ret == 21 && str[i] != '\0' && str[i] != '\n')
 				{
 					ft_putchar(str[i]);
 					ft_putstr("\nfin de tetrimino incorrecte\n");
@@ -118,14 +118,23 @@ int		ft_read(char *str)
 	int		fd;
 	int		ret;
 	char	buf[22];
+	int		levier;
 
+	levier = 0;
 	fd = open(str, O_RDONLY);
 	while ((ret = read(fd, buf, 21)) > 0)
 	{
 		buf[ret] = '\0';
 		ft_putstr(buf);
-		if (ft_check_chars(buf) == 1)
+		if (ret == 20)
+			levier = 1;
+		if (ft_check_chars(buf, ret) == 1)
 			return (1);
+	}
+	if (levier == 0)
+	{
+		ft_putstr("ligne vide apres dernier tetrimino\n");
+		return (1);
 	}
 	close(fd);
 	return (0);
