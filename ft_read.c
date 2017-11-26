@@ -50,20 +50,12 @@ int		ft_check_chars(char *str, int ret)
 			if (line == 5)
 			{
 				if (ret == 21 && str[i] != '\0' && str[i] != '\n')
-				{
-					ft_putchar(str[i]);
-					ft_putstr("\nfin de tetrimino incorrecte\n");
 					return (1);
-				}
 			}
 			else
 			{
 				if (str[i] != '.' && str[i] != '#' && str[i] != '\n')
-				{
-					ft_putchar(str[i]);
-					ft_putstr("\ncaractere incorrect\n");
 					return (1);
-				}
 			}
 			if (str[i] == '.')
 				pwin++;
@@ -80,11 +72,7 @@ int		ft_check_chars(char *str, int ret)
 		else
 		{
 			if ((i == 4 || i == 9 || i == 14 || i == 19) && str[i] != '\n')
-			{
-				ft_putchar(str[i]);
-				ft_putstr("\npas de retour a la fin de ligne\n");
 				return (1);
-			}
 			else
 			{
 				select = 1;
@@ -93,23 +81,10 @@ int		ft_check_chars(char *str, int ret)
 			}
 		}
 	}
-	ft_putstr("points puis diez : ");
-	ft_putnbr(pwin);
-	ft_putchar(' ');
-	ft_putnbr(dyez);
-	ft_putchar('\n');
 	if (pwin != 12 || dyez != 4)
-	{
-		ft_putstr("nombres incorrects\n");
 		return (1);
-	}
 	if (count < 6)
-	{
-		ft_putstr("diezs mal positionnes car total contacts = ");
-		ft_putnbr(count);
-		ft_putchar('\n');
 		return (1);
-	}
 	return (0);
 }
 
@@ -132,10 +107,7 @@ int		ft_read(char *str)
 			return (1);
 	}
 	if (levier == 0)
-	{
-		ft_putstr("ligne vide apres dernier tetrimino\n");
 		return (1);
-	}
 	close(fd);
 	return (0);
 }
