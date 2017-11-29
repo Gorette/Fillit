@@ -65,6 +65,112 @@ int			ft_hauteur(char **tetri)
 	return (h);
 }
 
+void		ft_left(t_rex *bob)
+{
+	int		i;
+	int		select;
+	char	stamp;
+
+	i = 0;
+	select = 0;
+	while (i < 4 && bob->tab[i][0] != '#')
+	{
+		i++;
+		if (i == 4)
+		{
+			i = 0;
+			while (i < 4)
+			{
+				while (select < 3)
+				{
+					stamp = bob->tab[i][select];
+					bob->tab[i][select] = bob->tab[i][select + 1];
+					bob->tab[i][select + 1] = stamp;
+					select++;
+				}
+				i++;
+				select = 0;
+			}
+			i = 0;
+		}
+	}
+
+}
+
+void		ft_up(t_rex *bob)
+{
+	int		i;
+	int		select;
+	char	*stamp;
+
+	i = 0;
+	select = 0;
+	while (select < 4 && bob->tab[0][select] != '#')
+	{
+		select++;
+		if (select == 4)
+		{
+			while (i < 3)
+			{
+				stamp = bob->tab[i];
+				bob->tab[i] = bob->tab[i + 1];
+				bob->tab[i + 1] = stamp;
+				i++;
+			}
+			i = 0;
+			select = 0;
+		}
+	}
+}
+
+void		ft_rexaddend(t_rex **start, t_rex *new)
+{
+	t_rex	*stamp;
+
+	if (start)
+	{
+		stamp = *start;
+		while (stamp->next)
+			stamp = stamp->next;
+		stamp->next = new;
+	}
+	else
+		start = &new;
+}
+
+void		ft_alphabetyzer(t_rex *bob, char c)
+{
+	int		i;
+	int		j;
+
+	i = -1;
+	while (bob->tab[++i])
+	{
+		j = -1;
+		while (bob->tab[i][++j])
+		{
+			if (bob->tab[i][j] == '#')
+				bob->tab[i][j] = c;
+		}
+	}
+}
+
+void		ft_show_list(t_rex **start)
+{
+	t_rex	*tmp;
+
+	tmp = *start;
+	while (tmp)
+	{
+		ft_print_tab(tmp->tab);
+		ft_putstr("\nlargeur = ");
+		ft_putnbr(tmp->l);
+		ft_putstr("\nhauteur = ");
+		ft_putnbr(tmp->h);
+		ft_putchar('\n');
+	}
+}
+
 t_rex		*ft_new_tetri(char *buf)
 {
 	t_rex	*new;

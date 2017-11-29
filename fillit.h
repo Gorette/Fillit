@@ -28,5 +28,10 @@ int		ft_read(char *str);
 int		ft_check_chars(char *str, int ret);
 int		ft_check_dyez(char *str, int i);
 t_rex	*ft_new_tetri(char *buf);
+void	ft_left(t_rex *bob);
+void	ft_up(t_rex *bob);
+void	ft_rexaddend(t_rex **start, t_rex *nw);
+void	ft_alphabetyzer(t_rex *bob, char c);
+void	ft_show_list(t_rex **start);
 
 #endif

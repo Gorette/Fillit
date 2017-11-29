@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ceugene <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: ceugene <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:46:31 by axbal             #+#    #+#             */
 /*   Updated: 2017/11/28 17:27:54 by axbal            ###   ########.fr       */
@@ -94,9 +94,13 @@ int		ft_read(char *str)
 	int		ret;
 	char	buf[22];
 	int		levier;
-	t_rex	*test;
+	t_rex	**list;
+	t_rex	*new;
+	char	c;
 
 	levier = 0;
+	c = 'A';
+	list = NULL;
 	fd = open(str, O_RDONLY);
 	while ((ret = read(fd, buf, 21)) > 0)
 	{
@@ -105,12 +109,18 @@ int		ft_read(char *str)
 			levier = 1;
 		if (ft_check_chars(buf, ret) == 1)
 			return (1);
-		test = ft_new_tetri(buf);
-		ft_print_tab(test->tab);
+		new = ft_new_tetri(buf);
+		ft_left(new);
+		ft_up(new);
+		ft_alphabetyzer(new, c);
+		c++;
+		ft_rexaddend(list, new);
+//	ft_show_list(list);
+		ft_print_tab(new->tab);
 		ft_putstr("\nlargeur = ");
-		ft_putnbr(test->l);
+		ft_putnbr(new->l);
 		ft_putstr("\nhauteur = ");
-		ft_putnbr(test->h);
+		ft_putnbr(new->h);
 		ft_putchar('\n');
 	}
 	if (levier == 0)
