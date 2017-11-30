@@ -33,5 +33,6 @@ void	ft_up(t_rex *bob);
 void	ft_rexaddend(t_rex **start, t_rex *nw);
 void	ft_alphabetyzer(t_rex *bob, char c);
 void	ft_show_list(t_rex **start);
+int		ft_map(t_rex **start);
 
 #endif

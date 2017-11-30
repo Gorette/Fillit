@@ -15,6 +15,7 @@ NAME = fillit
 SRCS = main.c		\
 	   ft_read.c	\
 	   ft_lst.c		\
+	   ft_map.c		\
 
 SRCO = $(SRCS:.c=.o)
 

@@ -123,9 +123,10 @@ int		ft_read(char *str)
 			ft_rexaddend(list, new);
 		c++;
 	}
-	ft_show_list(list);
 	if (levier == 0)
 		return (1);
+	ft_show_list(list);
+	ft_map(list);
 	close(fd);
 	return (0);
 }

@@ -28,6 +28,7 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	ret = ft_read(argv[1]);
-	ft_putnbr(ret);
+	if (ret != 0)
+		return (ft_error());
 	return (0);
 }
