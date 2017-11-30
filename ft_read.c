@@ -6,7 +6,7 @@
 /*   By: ceugene <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:46:31 by axbal             #+#    #+#             */
-/*   Updated: 2017/11/28 17:27:54 by axbal            ###   ########.fr       */
+/*   Updated: 2017/11/30 17:07:11 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int		ft_read(char *str)
 	int		levier;
 	t_rex	**list;
 	t_rex	*new;
+	t_rex	*start;
 	char	c;
 
 	levier = 0;
@@ -113,16 +114,16 @@ int		ft_read(char *str)
 		ft_left(new);
 		ft_up(new);
 		ft_alphabetyzer(new, c);
+		if (c == 'A')
+		{
+			start = new;
+			list = &start;
+		}
+		else
+			ft_rexaddend(list, new);
 		c++;
-		ft_rexaddend(list, new);
-//	ft_show_list(list);
-		ft_print_tab(new->tab);
-		ft_putstr("\nlargeur = ");
-		ft_putnbr(new->l);
-		ft_putstr("\nhauteur = ");
-		ft_putnbr(new->h);
-		ft_putchar('\n');
 	}
+	ft_show_list(list);
 	if (levier == 0)
 		return (1);
 	close(fd);

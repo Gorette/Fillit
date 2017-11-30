@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 15:58:08 by axbal             #+#    #+#             */
-/*   Updated: 2017/11/28 17:25:46 by axbal            ###   ########.fr       */
+/*   Updated: 2017/11/30 17:03:08 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,15 +127,10 @@ void		ft_rexaddend(t_rex **start, t_rex *new)
 {
 	t_rex	*stamp;
 
-	if (start)
-	{
-		stamp = *start;
-		while (stamp->next)
-			stamp = stamp->next;
-		stamp->next = new;
-	}
-	else
-		start = &new;
+	stamp = *start;
+	while (stamp->next != NULL)
+		stamp = stamp->next;
+	stamp->next = new;
 }
 
 void		ft_alphabetyzer(t_rex *bob, char c)
@@ -168,6 +163,7 @@ void		ft_show_list(t_rex **start)
 		ft_putstr("\nhauteur = ");
 		ft_putnbr(tmp->h);
 		ft_putchar('\n');
+		tmp = tmp->next;
 	}
 }
 
