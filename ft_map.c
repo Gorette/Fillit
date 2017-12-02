@@ -12,6 +12,8 @@
 
 #include "fillit.h"
 
+
+
 void	ft_del_tetri(t_rex *tetri, char **map)
 {
 	char	c;
@@ -97,35 +99,43 @@ char	**ft_upmap(char **map, int size)
 	return (map);
 }
 
-void	ft_test_map(t_rex **start, char **map, int size)
+int		ft_rec(t_rex *tetri, char **map, int size)
 {
-	t_rex	*tmp;
 	int		i;
 	int		j;
 
 	i = 0;
-	tmp = *start;
 	while (map[i])
 	{
 		j = 0;
-		while (map[i][j] && tmp)
+		while (map[i][j])
 		{
-			if (size - j >= tmp->l && size - i >= tmp->h)
+			if (ft_fill(j, i, map, tetri) == 0)
 			{
-				if (ft_fill(j, i, map, tmp) == 0)
-					tmp = tmp->next;
-				else
-				j++;
+				if (tetri->next == NULL)
+					return (0);
+				if (ft_rec(tetri->next, map, size) == 0)
+					return (0);
+				ft_del_tetri(tetri, map);
 			}
-			else
-				j++;
+			j++;
 		}
 		i++;
 	}
-	if (tmp == NULL)
-		ft_print_tab(map);
-	else
-		ft_test_map(start, ft_upmap(map, size + 1), size + 1);
+	return (1);
+}
+
+void	ft_call_rec(t_rex **start, char **map, int size)
+{
+	int		end;
+
+	end = 1;
+	while (ft_rec(*start, map, size) != 0)
+	{
+		size++;
+		map = ft_upmap(map, size + 1);
+	}
+	ft_print_tab(map);
 }
 
 int		ft_map(t_rex **start)
@@ -160,6 +170,6 @@ int		ft_map(t_rex **start)
 	map[size] = NULL;
 	ft_print_tab(map);
 	ft_putstr("\n\n");
-	ft_test_map(start, map, size);
+	ft_call_rec(start, map, size - 1);
 	return (0);
 }
