@@ -69,16 +69,18 @@ char	**ft_upmap(char **map, int size)
 	int		i;
 	int		j;
 
-	i = -1;
-	while (map[++i])
-		free(map[i]);
-	free(map[i]);
-	free(map);
-	ft_putnbr(size);
-	if (!(map = (char **)malloc(sizeof(char *) * (size + 2))))
-		return (NULL);
 	i = 0;
 	while (map[i])
+	{
+		free(map[i]);
+		i++;
+	}
+	free(map[i]);
+	free(map);
+	if (!(map = (char **)malloc(sizeof(char *) * (size + 1))))
+		return (NULL);
+	i = 0;
+	while (i < size)
 	{
 		j = 0;
 		if (!(map[i] = (char *)malloc(sizeof(char) * (size + 1))))
@@ -91,7 +93,7 @@ char	**ft_upmap(char **map, int size)
 		map[i][j] = '\0';
 		i++;
 	}
-	map[size + 1] = NULL;
+	map[size] = NULL;
 	return (map);
 }
 
