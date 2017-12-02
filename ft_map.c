@@ -19,19 +19,24 @@ void	ft_del_tetri(t_rex *tetri, char **map)
 	char	c;
 	int		i;
 	int		j;
+	int		count;
 
+	count = 0;
 	i = 0;
 	j = 0;
 	while (j < 4 && tetri->tab[0][j] == '.')
 		j++;
 	c = tetri->tab[0][j];
-	while (map[i])
+	while (count < 4 && map[i])
 	{
 		j = 0;
-		while (map[i][j])
+		while (map[i][j] && count < 4)
 		{
 			if (map[i][j] == c)
+			{
 				map[i][j] = '.';
+				count++;
+			}
 			j++;
 		}
 		i++;
@@ -42,26 +47,26 @@ int		ft_fill(int x, int y, char **map, t_rex *tetri)
 {
 	int		i;
 	int		j;
-	int		count;
+	int		cont;
 
-	count = 0;
+	cont = 0;
 	j = 0;
-	while (map[y + j] && j < 4 && count < 4)
+	while (map[y + j] && j < 4 && cont < 4)
 	{
 		i = 0;
-		while (map[y + j][x + i] && count < 4 && i < 4)
+		while (map[y + j][x + i] && cont < 4 && i < 4)
 		{
-			if (tetri->tab[j][i] != '.' && map[y + j][x + i] == '.')
+			if (cont < 4 && tetri->tab[j][i] != '.' && map[y + j][x + i] == '.')
 			{
 				map[y + j][x + i] = tetri->tab[j][i];
-				count++;
+				cont++;
+				if (cont == 4)
+					return (0);
 			}
 			i++;
 		}
 		j++;
 	}
-	if (count == 4)
-		return (0);
 	ft_del_tetri(tetri, map);
 	return (1);
 }
@@ -77,7 +82,6 @@ char	**ft_upmap(char **map, int size)
 		free(map[i]);
 		i++;
 	}
-	free(map[i]);
 	free(map);
 	if (!(map = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
@@ -112,9 +116,7 @@ int		ft_rec(t_rex *tetri, char **map, int size)
 		{
 			if (ft_fill(j, i, map, tetri) == 0)
 			{
-				if (tetri->next == NULL)
-					return (0);
-				if (ft_rec(tetri->next, map, size) == 0)
+				if (tetri->next == NULL || ft_rec(tetri->next, map, size) == 0)
 					return (0);
 				ft_del_tetri(tetri, map);
 			}
@@ -136,7 +138,7 @@ void	ft_call_rec(t_rex **start, char **map, int size)
 	while (ft_rec(*start, map, size) != 0)
 	{
 		size++;
-		map = ft_upmap(map, size + 1);
+		map = ft_upmap(map, size);
 	}
 	while (*start)
 	{
@@ -185,6 +187,6 @@ int		ft_map(t_rex **start)
 	map[size] = NULL;
 	ft_print_tab(map);
 	ft_putstr("\n\n");
-	ft_call_rec(start, map, size - 1);
+	ft_call_rec(start, map, size);
 	return (0);
 }
