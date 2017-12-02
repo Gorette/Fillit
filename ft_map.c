@@ -128,12 +128,27 @@ int		ft_rec(t_rex *tetri, char **map, int size)
 void	ft_call_rec(t_rex **start, char **map, int size)
 {
 	int		end;
+	t_rex	*stmp;
+	int		i;
 
+	i = 0;
 	end = 1;
 	while (ft_rec(*start, map, size) != 0)
 	{
 		size++;
 		map = ft_upmap(map, size + 1);
+	}
+	while (*start)
+	{
+		stmp = (*start)->next;
+		while ((*start)->tab[i])
+		{
+			free((*start)->tab[i]);
+			i++;
+		}
+		(*start)->next = NULL;
+		free(*start);
+		*start = stmp;
 	}
 	ft_print_tab(map);
 }
