@@ -6,7 +6,7 @@
 /*   By: ceugene <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:46:31 by axbal             #+#    #+#             */
-/*   Updated: 2017/11/30 17:07:11 by axbal            ###   ########.fr       */
+/*   Updated: 2017/12/04 21:57:14 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int		ft_read(char *str)
 	}
 	if (levier == 0)
 		return (1);
-	ft_show_list(list);
 	ft_map(list);
 	close(fd);
 	return (0);

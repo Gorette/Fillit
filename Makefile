@@ -6,7 +6,7 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2017/11/28 17:30:12 by axbal            ###   ########.fr        #
+#    Updated: 2017/12/04 22:36:07 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,16 +25,21 @@ LIB = ./Libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(SRCO)
+$(NAME): libsvp $(SRCO)
 	gcc -o $(NAME) $(SRCO) $(LIB)
 
 $(SRCO): $(SRCS)
 	gcc -c $(FLAGS) $(SRCS)
 
+libsvp:
+	make -C Libft
+
 clean:
 	rm -rf $(SRCO)
+	make -C Libft clean
 
 fclean: clean
 	rm -rf $(NAME)
+	make -C Libft fclean
 
 re: fclean all

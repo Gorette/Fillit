@@ -6,7 +6,7 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/01 15:16:36 by axbal             #+#    #+#             */
-/*   Updated: 2017/12/01 17:05:28 by axbal            ###   ########.fr       */
+/*   Updated: 2017/12/04 21:58:26 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	ft_call_rec(t_rex **start, char **map, int size)
 		*start = stmp;
 	}
 	ft_print_tab(map);
+	ft_putchar('\n');
 }
 
 int		ft_map(t_rex **start)
@@ -185,8 +186,6 @@ int		ft_map(t_rex **start)
 		i++;
 	}
 	map[size] = NULL;
-	ft_print_tab(map);
-	ft_putstr("\n\n");
 	ft_call_rec(start, map, size);
 	return (0);
 }
