@@ -23,15 +23,17 @@ FLAGS = -Wall -Wextra -Werror
 
 LIB = ./Libft/libft.a
 
-all: $(NAME)
+all: libsvp $(NAME)
 
-$(NAME): libsvp $(SRCO)
+$(NAME): $(SRCO)
 	gcc -o $(NAME) $(SRCO) $(LIB)
 
 $(SRCO): $(SRCS)
 	gcc -c $(FLAGS) $(SRCS)
 
-libsvp:
+libsvp: $(LIB)
+
+$(LIB):
 	make -C Libft
 
 clean:
