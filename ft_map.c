@@ -71,10 +71,9 @@ int		ft_fill(int x, int y, char **map, t_rex *tetri)
 	return (1);
 }
 
-char	**ft_upmap(char **map, int size)
+void	ft_freemap(char **map)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	while (map[i])
@@ -83,6 +82,15 @@ char	**ft_upmap(char **map, int size)
 		i++;
 	}
 	free(map);
+}
+
+char	**ft_upmap(char **map, int size)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	ft_freemap(map);
 	if (!(map = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	i = 0;
@@ -129,12 +137,10 @@ int		ft_rec(t_rex *tetri, char **map, int size)
 
 void	ft_call_rec(t_rex **start, char **map, int size)
 {
-	int		end;
 	t_rex	*stmp;
 	int		i;
 
 	i = 0;
-	end = 1;
 	while (ft_rec(*start, map, size) != 0)
 	{
 		size++;
@@ -153,6 +159,7 @@ void	ft_call_rec(t_rex **start, char **map, int size)
 		*start = stmp;
 	}
 	ft_print_tab(map);
+	ft_freemap(map);
 	ft_putchar('\n');
 }
 
