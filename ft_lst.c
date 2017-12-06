@@ -72,7 +72,6 @@ void		ft_left(t_rex *bob)
 	char	stamp;
 
 	i = 0;
-	select = 0;
 	while (i < 4 && bob->tab[i][0] != '#')
 	{
 		i++;
@@ -81,20 +80,18 @@ void		ft_left(t_rex *bob)
 			i = 0;
 			while (i < 4)
 			{
-				while (select < 3)
+				select = -1;
+				while (++select < 3)
 				{
 					stamp = bob->tab[i][select];
 					bob->tab[i][select] = bob->tab[i][select + 1];
 					bob->tab[i][select + 1] = stamp;
-					select++;
 				}
 				i++;
-				select = 0;
 			}
 			i = 0;
 		}
 	}
-
 }
 
 void		ft_up(t_rex *bob)
