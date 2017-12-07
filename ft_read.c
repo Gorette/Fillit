@@ -28,46 +28,34 @@ int		ft_check_dyez(char *str, int i)
 	return (contact);
 }
 
-int		ft_check_chars(char *str, int ret)
+int		ft_check_chars(char *str, int ret, int pwin, int dyez)
 {
 	int		line;
 	int		select;
 	int		i;
-	int		pwin;
-	int		dyez;
 	int		count;
 
 	count = 0;
-	pwin = 0;
-	dyez = 0;
 	line = 1;
 	select = 1;
-	i = 0;
-	while (str[i])
+	i = -1;
+	while (str[++i])
 	{
 		if (select != 5)
 		{
-			if (line == 5)
-			{
-				if (ret == 21 && str[i] != '\0' && str[i] != '\n')
-					return (1);
-			}
-			else
-			{
-				if (str[i] != '.' && str[i] != '#' && str[i] != '\n')
-					return (1);
-			}
+			if (line == 5 && ret == 21 && str[i] != '\0' && str[i] != '\n')
+				return (1);
+			else if (str[i] != '.' && str[i] != '#' && str[i] != '\n')
+				return (1);
 			if (str[i] == '.')
 				pwin++;
-			if (str[i] == '#')
+			if (str[i] == '#' && ++dyez < 6)
 			{
 				if ((ft_check_dyez(str, i)) < 1)
 					return (1);
 				count = count + ft_check_dyez(str, i);
-				dyez++;
 			}
 		select++;
-		i++;
 		}
 		else
 		{
@@ -76,7 +64,6 @@ int		ft_check_chars(char *str, int ret)
 			else
 			{
 				select = 1;
-				i++;
 				line++;
 			}
 		}
@@ -108,7 +95,7 @@ int		ft_read(char *str)
 		buf[ret] = '\0';
 		if (ret == 20)
 			levier = 1;
-		if (ft_check_chars(buf, ret) == 1)
+		if (ft_check_chars(buf, ret, 0, 0) == 1)
 			return (1);
 		new = ft_new_tetri(buf);
 		ft_left(new);

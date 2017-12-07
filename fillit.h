@@ -25,7 +25,7 @@ typedef struct		s_rex
 }					t_rex;
 
 int		ft_read(char *str);
-int		ft_check_chars(char *str, int ret);
+int		ft_check_chars(char *str, int ret, int pwin, int dyez);
 int		ft_check_dyez(char *str, int i);
 t_rex	*ft_new_tetri(char *buf);
 void	ft_left(t_rex *bob);
