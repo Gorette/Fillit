@@ -6,13 +6,13 @@
 /*   By: ceugene <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:46:31 by axbal             #+#    #+#             */
-/*   Updated: 2017/12/04 21:57:14 by axbal            ###   ########.fr       */
+/*   Updated: 2017/12/09 14:19:28 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		ft_check_dyez(char *str, int i)
+int		ft_contact(char *str, int i)
 {
 	int		contact;
 
@@ -28,91 +28,95 @@ int		ft_check_dyez(char *str, int i)
 	return (contact);
 }
 
-int		ft_check_chars(char *str, int ret, int pwin, int dyez)
+int		ft_check_dyez(char *str)
 {
-	int		line;
-	int		select;
 	int		i;
 	int		count;
+	int		contact;
 
+	i = 0;
 	count = 0;
-	line = 1;
-	select = 1;
-	i = -1;
-	while (str[++i])
+	contact = 0;
+	while (str[i])
 	{
-		if (select != 5)
+		if (str[i] == '#')
 		{
-			if (line == 5 && ret == 21 && str[i] != '\0' && str[i] != '\n')
-				return (1);
-			else if (str[i] != '.' && str[i] != '#' && str[i] != '\n')
-				return (1);
-			if (str[i] == '.')
-				pwin++;
-			if (str[i] == '#' && ++dyez < 6)
-			{
-				if ((ft_check_dyez(str, i)) < 1)
-					return (1);
-				count = count + ft_check_dyez(str, i);
-			}
-		select++;
+			count++;
+			contact = contact + ft_contact(str, i);
 		}
-		else
-		{
-			if ((i == 4 || i == 9 || i == 14 || i == 19) && str[i] != '\n')
-				return (1);
-			else
-			{
-				select = 1;
-				line++;
-			}
-		}
+		i++;
 	}
-	if (pwin != 12 || dyez != 4)
-		return (1);
-	if (count < 6)
+	if (count == 4 && contact >= 6)
+		return (0);
+	return (1);
+}
+
+int		ft_check_pattern(char *str)
+{
+	int		i;
+	int		j;
+	int		line;
+
+	i = 0;
+	line = 1;
+	while (line < 5)
+	{
+		j = -1;
+		while (++j < 4)
+		{
+			if (str[i] != '.' && str[i] != '#')
+				return (1);
+			i++;
+		}
+		if (str[i] != '\n')
+			return (1);
+		i++;
+		line++;
+	}
+	if (str[i] == '\n' && str[i + 1] == '\0')
+		return (0);
+	if (str[i] != '\n' && str[i] != '\0')
 		return (1);
 	return (0);
 }
 
-int		ft_read(char *str)
+t_rex	*ft_tetricheck(char *buf, char c)
 {
-	int		fd;
+	t_rex	*new;
+	if (ft_check_dyez(buf) == 1 || ft_check_pattern(buf) == 1)
+		return (NULL);
+	new = ft_new_tetri(buf);
+	ft_up(new);
+	ft_left(new);
+	ft_alphabetyzer(new, c);
+	return (new);
+}
+
+int		ft_read(int fd, t_rex **list, char c, char *buf)
+{
 	int		ret;
-	char	buf[22];
 	int		levier;
-	t_rex	**list;
 	t_rex	*new;
 	t_rex	*start;
-	char	c;
 
 	levier = 0;
-	c = 'A';
-	list = NULL;
-	fd = open(str, O_RDONLY);
 	while ((ret = read(fd, buf, 21)) > 0)
 	{
 		buf[ret] = '\0';
 		if (ret == 20)
 			levier = 1;
-		if (ft_check_chars(buf, ret, 0, 0) == 1)
+		if ((new = ft_tetricheck(buf, c)) == NULL)
 			return (1);
-		new = ft_new_tetri(buf);
-		ft_left(new);
-		ft_up(new);
-		ft_alphabetyzer(new, c);
-		if (c == 'A')
+		if (c++ == 'A')
 		{
 			start = new;
 			list = &start;
 		}
 		else
 			ft_rexaddend(list, new);
-		c++;
 	}
 	if (levier == 0)
 		return (1);
 	ft_map(list);
-	close(fd);
 	return (0);
 }

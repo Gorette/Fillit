@@ -6,16 +6,18 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2017/12/07 01:34:58 by axbal            ###   ########.fr        #
+#    Updated: 2017/12/09 14:36:26 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
-SRCS = main.c		\
-	   ft_read.c	\
-	   ft_lst.c		\
-	   ft_map.c		\
+SRCS = main.c				\
+	   ft_read.c			\
+	   ft_lst.c				\
+	   ft_map.c				\
+	   ft_fillit.c			\
+	   ft_tetri_setup.c		\
 
 SRCO = $(SRCS:.c=.o)
 
