@@ -138,7 +138,7 @@ int		ft_map(t_rex **start)
 
 	i = 0;
 	first = *start;
-	size = ft_size_map(start);
+	size = ft_size_map(start) - 1;
 	if (!(map = (char **)malloc(sizeof(char *) * size + 1)))
 		return (1);
 	while (i < size)
