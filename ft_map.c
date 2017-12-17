@@ -109,6 +109,25 @@ char	**ft_upmap(char **map, int size)
 	return (map);
 }
 
+int		ft_size_map(t_rex **start)
+{
+	int		size;
+	int		nb;
+	t_rex	*ptr;
+
+	nb = 1;
+	size = 1;
+	ptr = *start;
+	while (ptr != NULL)
+	{
+		ptr = ptr->next;
+		nb++;
+	}
+	while (size * size < nb * 4)
+		size++;
+	return (size);
+}
+
 int		ft_map(t_rex **start)
 {
 	char	**map;
@@ -119,7 +138,7 @@ int		ft_map(t_rex **start)
 
 	i = 0;
 	first = *start;
-	first->h >= first->l ? (size = first->h) : (size = first->l);
+	size = ft_size_map(start);
 	if (!(map = (char **)malloc(sizeof(char *) * size + 1)))
 		return (1);
 	while (i < size)
