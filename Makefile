@@ -6,12 +6,13 @@
 #    By: axbal <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/23 14:54:13 by axbal             #+#    #+#              #
-#    Updated: 2017/12/09 14:36:26 by axbal            ###   ########.fr        #
+#    Updated: 2018/03/27 18:49:09 by axbal            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fillit
 
+SRCDIR = src
 SRCS = main.c				\
 	   ft_read.c			\
 	   ft_lst.c				\
@@ -19,29 +20,40 @@ SRCS = main.c				\
 	   ft_fillit.c			\
 	   ft_tetri_setup.c		\
 
-SRCO = $(SRCS:.c=.o)
+OBJS = $(SRCS:.c=.o)
+
+OBJDIR = obj
+OBJS = $(SRCS:.c=.o)
+
+SRC = $(addprefix $(SRCDIR)/,$(SRCS))
+OBJ = $(addprefix $(OBJDIR)/,$(OBJS))
 
 FLAGS = -Wall -Wextra -Werror
 
-LIB = ./Libft/libft.a
+LIBFT = ./Libft/libft.a
+
+INCLUDE = -Iincludes
+
+.PHONY: all, clean, fclean, re
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(SRCO)
-	gcc -o $(NAME) $(SRCO) $(LIB)
+$(NAME): $(LIBFT) $(OBJ)
+	cc -o $(NAME) $(OBJ) $(LIBFT)
 
-$(SRCO): $(SRCS)
-	gcc -c $(FLAGS) $(SRCS)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@mkdir $(OBJDIR) 2> /dev/null || true
+	cc $(FLAGS) $(INCLUDE) -o $@ -c $<
 
-$(LIB):
-	make -C Libft
+$(LIBFT):
+	make -C libft
 
 clean:
-	rm -rf $(SRCO)
-	make -C Libft clean
+	make -C libft clean
+	@rm -rf $(OBJDIR) 2> /dev/null || true
 
 fclean: clean
 	rm -rf $(NAME)
-	make -C Libft fclean
+	make -C libft fclean
 
 re: fclean all

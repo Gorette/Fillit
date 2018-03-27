@@ -6,14 +6,14 @@
 /*   By: axbal <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/23 14:47:38 by axbal             #+#    #+#             */
-/*   Updated: 2017/12/09 14:33:06 by axbal            ###   ########.fr       */
+/*   Updated: 2018/03/27 18:49:52 by axbal            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# include "Libft/libft.h"
+# include "../libft/includes/libft.h"
 # include <fcntl.h>
 
 typedef struct		s_rex
